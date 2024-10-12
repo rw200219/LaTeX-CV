@@ -1,0 +1,497 @@
+\documentclass[10pt, letterpaper]{article}
+
+% Packages:
+\usepackage[
+    ignoreheadfoot, % set margins without considering header and footer
+    top=2 cm, % seperation between body and page edge from the top
+    bottom=2 cm, % seperation between body and page edge from the bottom
+    left=2 cm, % seperation between body and page edge from the left
+    right=2 cm, % seperation between body and page edge from the right
+    footskip=1.0 cm, % seperation between body and footer
+    % showframe % for debugging 
+]{geometry} % for adjusting page geometry
+\usepackage{titlesec} % for customizing section titles
+\usepackage{tabularx} % for making tables with fixed width columns
+\usepackage{array} % tabularx requires this
+\usepackage[dvipsnames]{xcolor} % for coloring text
+\definecolor{primaryColor}{RGB}{0, 0, 0} % define primary color
+\usepackage{enumitem} % for customizing lists
+\usepackage{fontawesome5} % for using icons
+\usepackage{amsmath} % for math
+\usepackage[
+    pdftitle={John Doe's CV},
+    pdfauthor={John Doe},
+    pdfcreator={LaTeX with RenderCV},
+    colorlinks=true,
+    urlcolor=primaryColor
+]{hyperref} % for links, metadata and bookmarks
+\usepackage[pscoord]{eso-pic} % for floating text on the page
+\usepackage{calc} % for calculating lengths
+\usepackage{bookmark} % for bookmarks
+\usepackage{lastpage} % for getting the total number of pages
+\usepackage{changepage} % for one column entries (adjustwidth environment)
+\usepackage{paracol} % for two and three column entries
+\usepackage{ifthen} % for conditional statements
+\usepackage{needspace} % for avoiding page brake right after the section title
+\usepackage{iftex} % check if engine is pdflatex, xetex or luatex
+
+% Ensure that generate pdf is machine readable/ATS parsable:
+\ifPDFTeX
+    \input{glyphtounicode}
+    \pdfgentounicode=1
+    \usepackage[T1]{fontenc}
+    \usepackage[utf8]{inputenc}
+    \usepackage{lmodern}
+\fi
+
+\usepackage{charter}
+
+% Some settings:
+\raggedright
+\AtBeginEnvironment{adjustwidth}{\partopsep0pt} % remove space before adjustwidth environment
+\pagestyle{empty} % no header or footer
+\setcounter{secnumdepth}{0} % no section numbering
+\setlength{\parindent}{0pt} % no indentation
+\setlength{\topskip}{0pt} % no top skip
+\setlength{\columnsep}{0.15cm} % set column seperation
+\pagenumbering{gobble} % no page numbering
+
+\titleformat{\section}{\needspace{4\baselineskip}\bfseries\large}{}{0pt}{}[\vspace{1pt}\titlerule]
+
+\titlespacing{\section}{
+    % left space:
+    -1pt
+}{
+    % top space:
+    0.3 cm
+}{
+    % bottom space:
+    0.2 cm
+} % section title spacing
+
+\renewcommand\labelitemi{$\vcenter{\hbox{\small$\bullet$}}$} % custom bullet points
+\newenvironment{highlights}{
+    \begin{itemize}[
+        topsep=0.10 cm,
+        parsep=0.10 cm,
+        partopsep=0pt,
+        itemsep=0pt,
+        leftmargin=0 cm + 10pt
+    ]
+}{
+    \end{itemize}
+} % new environment for highlights
+
+
+\newenvironment{highlightsforbulletentries}{
+    \begin{itemize}[
+        topsep=0.10 cm,
+        parsep=0.10 cm,
+        partopsep=0pt,
+        itemsep=0pt,
+        leftmargin=10pt
+    ]
+}{
+    \end{itemize}
+} % new environment for highlights for bullet entries
+
+\newenvironment{onecolentry}{
+    \begin{adjustwidth}{
+        0 cm + 0.00001 cm
+    }{
+        0 cm + 0.00001 cm
+    }
+}{
+    \end{adjustwidth}
+} % new environment for one column entries
+
+\newenvironment{twocolentry}[2][]{
+    \onecolentry
+    \def\secondColumn{#2}
+    \setcolumnwidth{\fill, 4.5 cm}
+    \begin{paracol}{2}
+}{
+    \switchcolumn \raggedleft \secondColumn
+    \end{paracol}
+    \endonecolentry
+} % new environment for two column entries
+
+\newenvironment{threecolentry}[3][]{
+    \onecolentry
+    \def\thirdColumn{#3}
+    \setcolumnwidth{, \fill, 4.5 cm}
+    \begin{paracol}{3}
+    {\raggedright #2} \switchcolumn
+}{
+    \switchcolumn \raggedleft \thirdColumn
+    \end{paracol}
+    \endonecolentry
+} % new environment for three column entries
+
+\newenvironment{header}{
+    \setlength{\topsep}{0pt}\par\kern\topsep\centering\linespread{1.5}
+}{
+    \par\kern\topsep
+} % new environment for the header
+
+\newcommand{\placelastupdatedtext}{% \placetextbox{<horizontal pos>}{<vertical pos>}{<stuff>}
+  \AddToShipoutPictureFG*{% Add <stuff> to current page foreground
+    \put(
+        \LenToUnit{\paperwidth-2 cm-0 cm+0.05cm},
+        \LenToUnit{\paperheight-1.0 cm}
+    ){\vtop{{\null}\makebox[0pt][c]{
+        \small\color{gray}\textit{Last updated in September 2024}\hspace{\widthof{Last updated in September 2024}}
+    }}}%
+  }%
+}%
+
+% save the original href command in a new command:
+\let\hrefWithoutArrow\href
+\usepackage{multicol}    % Add this line to your preamble
+\setlength{\columnsep}{0.5cm} % Space between columns (optional)
+
+\documentclass{article}
+\usepackage{array} % For better table column formatting
+\usepackage{booktabs} % For nicer table lines
+% new command for external links:
+
+
+\begin{document}
+
+
+    \newcommand{\AND}{\unskip
+        \cleaders\copy\ANDbox\hskip\wd\ANDbox
+        \ignorespaces
+    }
+    \newsavebox\ANDbox
+    \sbox\ANDbox{$|$}
+
+    \begin{header}
+        \fontsize{25 pt}{25 pt}\selectfont Rebecca Watson
+
+        \vspace{5 pt}
+
+        \normalsize
+        
+        \mbox{\hrefWithoutArrow{mailto:rebecca2002watson@gmail.com}{rebecca2002watson@gmail.com}}%
+        \kern 5.0 pt%
+        \AND%
+        \kern 5.0 pt%
+        \mbox{\hrefWithoutArrow{tel:+447756631124}{07756631124}}%
+        \kern 5.0 pt%
+        \AND%
+        \kern 5.0 pt%
+        \mbox{\hrefWithoutArrow{https://linkedin.com/in/-rebecca-watson}{linkedin.com/in/-rebecca-watson}}%
+        \kern 5.0 pt%
+        \AND%
+        \kern 5.0 pt%
+        \mbox{\hrefWithoutArrow{https://github.com/rw200219}{github.com/rw200219}}%
+    \end{header}
+
+    \vspace{5 pt - 0.3 cm}
+
+
+    \section{Personal Profile}
+
+        \begin{onecolentry}
+          Highly motivated and adaptable Computer Science MSc student with a strong STEM background, looking to secure a dynamic position in the industry to apply and develop skills acquired through lectures, seminars, and self-study. With a recent transition to Computer Science, I possess a strong determination for continuous learning, problem-solving, and self-improvement. Eager to gain additional knowledge, IT skills, and experience in this ever-changing field, I am committed to delivering results and leveraging a strong work ethic to contribute positively to your organisation.
+        \end{onecolentry}
+
+
+
+
+
+\section{Education}
+
+\begin{twocolentry}{ 
+   September 2024 - Present 
+}
+    \textbf{University of Kent}, Computer Science with an Industrial Placement (MSc) 
+    \vspace{0.05 cm}
+    \begin{tabular}{@{}>{\raggedright\arraybackslash}p{8cm}@{} >{\raggedright\arraybackslash}p{8cm}@{}}
+        \textbf{Modules:} & \textbf{} \\
+        - Introduction to Cyber Security & - Advanced Object-Oriented Programming \\
+       - Networks and Network Security & - Web-Based Information Systems Development \\
+        - Software Engineering & - Algorithms and Logic \\
+        - Object-Oriented Programming & - Systems Architecture \\
+    \end{tabular}
+\end{twocolentry}
+
+
+       \begin{twocolentry}{
+    September 2021 – July 2024
+}
+    \textbf{University of Leicester}, Clinical Sciences (BSc) 
+\end{twocolentry}
+\vspace{-0.15 cm} % Adjust the value as needed
+\begin{onecolentry}
+    \begin{highlights}
+        {First Class with Honours}
+    \end{highlights}
+\end{onecolentry}
+
+\vspace{0.2 cm}
+    \begin{twocolentry}{
+    September 2019 – July 2021
+}
+    \textbf{Prudhoe Community High School}, A Level and AS Level  
+\end{twocolentry}
+\vspace{-0.15 cm} % Adjust the value as needed
+\begin{onecolentry}
+    \begin{highlights}
+        {Philisophy and Ethics(A*), Chemistry (A), Physics (B), Core Maths (A)}
+    \end{highlights}
+\end{onecolentry}
+
+\vspace{0.2 cm}
+    \begin{twocolentry}{
+    September 2017 
+}
+    \textbf{Air Cadet Corps},  Pearson BTEC Level 1 Certificate 
+\end{twocolentry}
+\vspace{-0.15 cm} % Adjust the value as needed
+\begin{onecolentry}
+    \begin{highlights}
+        {TEAMWORK, PERSONAL SKILLS AND CITIZENSHIP IN YOUTH ORGANISATIONS (UNIFORMED) (QCF)
+     \end{highlights}
+\end{onecolentry}
+
+
+
+\section{Technical Skills}
+
+
+       
+        \begin{onecolentry}
+            \textbf{Programming Languages:} Java, Python, JavaScript
+        \end{onecolentry}
+
+        \vspace{0.05 cm}
+
+        \begin{onecolentry}
+            \textbf{Cybersecuirty Tools:} Wireshark, packet analysis, network security protocols (TCP/IP, HTTP/HTTPS)
+        \end{onecolentry}
+        
+        \vspace{0.05 cm}
+
+        \begin{onecolentry}
+            \textbf{Operating Systems:} Linux, Windows
+        \end{onecolentry}
+   \vspace{0.05 cm}
+
+        \begin{onecolentry}
+            \textbf{Networking concepts:} Firewalls, encryption methods, threat detection
+        \end{onecolentry}
+
+    \vspace{0.05 cm}
+
+        \begin{onecolentry}
+            \textbf{Document Preparation:} LaTeX
+        \end{onecolentry}
+
+
+
+
+
+
+\section{Relevant Certifications}
+
+    \begin{twocolentry}{
+    June 2024 - Present
+}
+    \textbf{Learn Java}, Codecademy   
+\end{twocolentry}
+
+ \vspace{0.05 cm}
+     \begin{twocolentry}{
+    June 2024 - Present
+}
+    \textbf{Learn Python 3}, Codecademy   
+\end{twocolentry}
+
+ \vspace{0.05 cm}
+      \begin{twocolentry}{
+    September 2024
+}
+    \textbf{Pre Security}, TryHackMe
+\end{twocolentry}
+
+ \vspace{0.05 cm}
+
+       \begin{twocolentry}{
+    July 2024
+}
+    \textbf{Learn Javascript Course}, Codecademy
+\end{twocolentry}
+
+ \vspace{0.05 cm}
+       \begin{twocolentry}{
+   June 2024
+}
+    \textbf{Foundations of Cybersecurity}, Coursera
+    
+\end{twocolentry}
+
+ \vspace{0.05 cm}
+        
+
+
+    
+    \section{Courses and Projects}
+    \begin{twocolentry}{ October 2024
+        }
+            \textbf{Customised LaTeX Curriculum Vitae: \href{https://github.com/rw200219/LaTeXCV}{https://tinyurl.com/5d6kewkm}}\end{twocolentry}
+
+        \vspace{0.05 cm}
+        \begin{onecolentry}
+            \begin{highlights}
+                \item Utilised familiar programming structures to adapt templates, formulating a CV tailored to my knowledge and abilities.
+            \item Implemented a modular approach to allow easy future implementations and edits, ensuring the CV remains relevant as my skill set evolves. 
+                \item Leveraged the formatting capabilities of LaTeX, to enhance readability and presentation to create a professional and well-structured document.
+            \end{highlights}
+        \end{onecolentry}
+
+
+        \vspace{0.2 cm}
+       
+        \begin{twocolentry}{ October 2024
+        }
+            \textbf{Flashcard App Development: \href{https://github.com/rw200219/my-intellij-project}{https://tinyurl.com/z4kk3hh7}}\end{twocolentry}
+
+        \vspace{0.05 cm}
+        \begin{onecolentry}
+            \begin{highlights}
+                \item Developed a Java-based console application using IntelliJ IDEA, designed to improve study retention and facilitate active recall learning methods.
+                \item Implemented features for users to create flashcards, quiz themselves, and track performance, leveraging Java Collections to manage flashcards and ensure efficient data handling.
+                \item Utilised Scanner for handling user input, creating an interactive experience to engage users.
+                \item Demonstrated strong problem-solving and coding skills by optimising the application using Java's object-oriented features for effective learning and memory retention.
+            \end{highlights}
+        \end{onecolentry}
+
+
+        \vspace{0.2 cm}
+
+        \begin{twocolentry}{
+            August 2024
+        }
+            \textbf{Wireshark for beginners: Caputure Packets- Coursera}\end{twocolentry}
+
+        \vspace{0.05 cm}
+        \begin{onecolentry}
+            \begin{highlights}
+                \item Installed and configured Wireshark for accurate packet capture and analysis, ensuring proper setup for Wireshark group users.
+                \item Initiated packet capture on an Ethernet interface and saved data to files for detailed examination.
+                \item Applied display filters to isolate HTTPS packets, focusing on secure web traffic and eliminating extraneous information.
+                \item Used display filters to identify web page IP addresses, demonstrating proficiency in network traffic analysis.
+                \item Filtered HTTPS packets to exclude specific IP addresses, showcasing advanced packet filtering techniques.
+            \end{highlights}
+        \end{onecolentry}
+
+\section {Extracurricular Education and Achievements} 
+    \begin{onecolentry}
+        \begin{highlights}
+            \item Level A2 Spanish completed alongside my university studies.
+            \item Bronze and Silver Duke of Edinburgh achieved in Air Cadets.
+
+        \end{highlights}
+    \end{onecolentry}
+
+   
+
+ \section{Interests and Volunteering}
+        
+        \begin{onecolentry}
+            \textbf{Co-founder and President of the University of Kent Computer Science Society:} Established a community for like-minded peers to collaborate and network in a field often perceived as solitary.
+        \end{onecolentry}
+
+        \vspace{0.05 cm}
+
+        \begin{onecolentry}
+            \textbf{Care Home Activities Coordinator at MHA Aigburth Residential and Dementia Care Home and Red Brick House Care Home:} Organised and led weekly accessible activities for residents, fostering meaningful interactions and enhancing their well-being during their stay. 
+        \end{onecolentry}
+         \vspace{0.05 cm}
+
+        \begin{onecolentry}
+            \textbf{Supported children with mental and physical disabilities in the School Games at St James’ Park, Newcastle:} Facilitated their participation in adapted sporting activities, ensuring enthusiasm, inclusivity, and accessibility for all. 
+        \end{onecolentry}
+          \vspace{0.05 cm}
+
+        \begin{onecolentry}
+            \textbf{Martial Arts Training:} Trained in karate since the age of 4, achieving a black belt third dan and becoming an assistant instructor. Continuously developed both physically and mentally through years of determination and practice.
+        \end{onecolentry}
+    
+    
+
+    \section{General Skills}
+       
+        \vspace{0.2 cm}
+
+        \begin{twocolentry}{
+            
+        }
+            \textbf{Teamwork:}\end{twocolentry}
+
+        \vspace{-0.05 cm}
+        \begin{onecolentry}
+            \begin{highlights}
+                \item Collaborative team player that adopts different perspectives and contributes to collective goals. Actively participates in group projects whilst fostering a positive team environment and leveraging diverse perspectives for optimal outcomes as displayed throughout my education.
+                
+            \end{highlights}
+        \end{onecolentry}
+\vspace{0.2 cm}
+
+        \begin{twocolentry}{
+            
+        }
+            \textbf{Adaptability:}\end{twocolentry}
+
+        \vspace{-0.05 cm}
+        \begin{onecolentry}
+            \begin{highlights}
+                \item My various previous job roles have proven my ability to adapt quickly to evolving work environments and industry demands, demonstrating flexibility and resilience in the face of challenges. 
+                
+            \end{highlights}
+        \end{onecolentry}
+        \vspace{0.2 cm}
+
+        \begin{twocolentry}{
+            
+        }
+            \textbf{Communication:}\end{twocolentry}
+
+        \vspace{-0.05 cm}
+        \begin{onecolentry}
+            \begin{highlights}
+                \item Working in customer service allowed me to develop and effectively communicate complex ideas in a clear and concise manner, facilitating seamless collaboration with team members and customers. 
+                
+            \end{highlights}
+        \end{onecolentry}
+              \vspace{0.2 cm}
+
+        \begin{twocolentry}{
+            
+        }
+            \textbf{Time management:}\end{twocolentry}
+
+        \vspace{-0.05 cm}
+        \begin{onecolentry}
+            \begin{highlights}
+                \item Demonstrate strong organisational skills by effectively managing time to complete projects ahead of deadlines to reduce stress and workloads during my university career. 
+                
+            \end{highlights}
+        \end{onecolentry}
+        
+ \begin{twocolentry}
+           
+\end{twocolentry}
+\vspace{-0.15 cm} % Adjust the value as needed
+\begin{onecolentry}
+   \textbf{References} - Available upon request  
+\end{onecolentry}
+       
+
+
+        
+
+\end{document}
+
