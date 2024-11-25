@@ -54,9 +54,3 @@ This project focused on:
 - **Collaborative Editing**:
   - Leveraging Overleaf for real-time adjustments and cross-platform access.
 
-
-## Future Enhancements
-
-- Experiment with additional LaTeX packages to explore unique designs.
-- Create multiple versions of the CV tailored to different industries or roles.
-- Integrate data-driven automation for generating CVs from a structured dataset.
